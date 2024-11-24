@@ -73,7 +73,14 @@ int pop(ArrayQueue *queue) {
     queue->queSize--;
     return num;
 }
-
+void print_queue(ArrayQueue *queue)
+{
+	int tmp =queue->front;
+	int rear =(queue->front+queue->queSize-1)%queue->queCapacity;
+	for(;tmp != rear;tmp++,tmp%=queue->queCapacity)
+		printf("%d,",queue->nums[tmp]);
+		printf("%d]\n",queue->nums[rear]);
+}
 /* Driver Code */
 int main() {
     /* 初始化队列 */
@@ -86,7 +93,7 @@ int main() {
     push(queue, 2);
     push(queue, 5);
     push(queue, 4);
-    printf("队列 queue = ");
+    printf("队列 queue = [");
     printArray(queue->nums, queue->queSize);
 
     /* 访问队首元素 */
@@ -95,8 +102,8 @@ int main() {
 
     /* 元素出队 */
     peekNum = pop(queue);
-    printf("出队元素 pop = %d ，出队后 queue = ", peekNum);
-    printArray(queue->nums, queue->queSize);
+    printf("出队元素 pop = %d ，出队后 queue = [", peekNum);
+    print_queue(queue);
 
     /* 获取队列的长度 */
     int queueSize = size(queue);
@@ -110,8 +117,8 @@ int main() {
     for (int i = 0; i < 10; i++) {
         push(queue, i);
         pop(queue);
-        printf("第 %d 轮入队 + 出队后 queue = ", i);
-        printArray(queue->nums, queue->queSize);
+        printf("第 %d 轮入队 + 出队后 queue = [", i);
+        print_queue(queue);
     }
 
     // 释放内存
